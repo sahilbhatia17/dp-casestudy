@@ -123,7 +123,10 @@ class SnubaBaseUI:
     def finish_trigger(self):
         # write out the collected examples to a file, and close
         with open(self.outfilepath, "wb") as fle:
-            pkl.dump([self.labeled_points,self.coverage], fle)
+            if self.selection_method == random_batch_select:
+                pkl.dump([self.labeled_points], fle)
+            else:
+                pkl.dump([self.labeled_points,self.coverage], fle)
         self.gui.destroy()
 
     def update_metrics(self):
